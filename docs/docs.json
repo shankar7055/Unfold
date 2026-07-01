@@ -10,7 +10,7 @@
   },
   "favicon": "/assets/favicon.svg",
   "appearance": {
-    "default": "system"
+    "default": "dark"
   },
   "fonts": {
     "family": "Geist"
