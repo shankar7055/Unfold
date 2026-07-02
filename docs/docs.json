@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "name": "Unfold",
-  "description": "Durable document parsing across providers.",
+  "description": "Reliable document parsing across AI providers.",
   "theme": "quill",
   "logo": {
     "light": "/assets/unfold-logo.svg",
