@@ -5,7 +5,7 @@ export const seo = {
   defaultDescription:
     "Parse and compare documents across providers — one contract, any backend.",
   defaultSocialImage: "/og-image.png",
-  defaultSocialImageAlt: "Unfold wordmark on a black background",
+  defaultSocialImageAlt: "Unfold logo on a dark background",
 } as const
 
 type PublicMetaOptions = {
