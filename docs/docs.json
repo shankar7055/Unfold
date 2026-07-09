@@ -10,7 +10,7 @@
   },
   "favicon": "/assets/favicon.svg",
   "appearance": {
-    "default": "dark"
+    "default": "system"
   },
   "fonts": {
     "family": "Inter"
