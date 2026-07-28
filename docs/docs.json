@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "name": "Unfold",
-  "description": "One API for document parsing — hosted, direct, or compared.",
+  "description": "Unfold: one API for document parsing across providers.",
   "theme": "mint",
   "logo": {
     "light": "/assets/unfold-logo.svg",
