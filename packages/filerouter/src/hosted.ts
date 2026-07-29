@@ -9,7 +9,7 @@ import type {
 import type { ProviderId } from "./catalog"
 
 export const UNFOLD_API_KEY_PREFIX = "uf_"
-export const UNFOLD_VERSION = "0.5.0" // x-release-please-version
+export const UNFOLD_VERSION = "0.6.0" // x-release-please-version
 export const UNFOLD_CLI_CLIENT_ID = "unfold-cli"
 export const UNFOLD_CLI_SCOPE = "jobs:create jobs:read"
 export const UNFOLD_DEFAULT_API_URL = "https://unfold.unfold-app.workers.dev"

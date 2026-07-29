@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.6.0](https://github.com/shankar7055/Unfold/compare/v0.5.0...v0.6.0) (2026-07-29)
+
+
+### Features
+
+* initial release of Unfold — document parsing across providers ([1dcf012](https://github.com/shankar7055/Unfold/commit/1dcf01283313d05d2e674db1649dce5c0b9e3d29))
+* **nav:** rename Benchmarks to Results in nav ([cb80edd](https://github.com/shankar7055/Unfold/commit/cb80edd6b0cf3b24a52dd37d9526aaf85f28bfa6))
+
+
+### Bug Fixes
+
+* **docs:** restore amber-600 for dark accent ([766544f](https://github.com/shankar7055/Unfold/commit/766544fe01c39ec010f2e5b4960b605b1081941e))
+* **docs:** restore original discord invite ([b8b66b4](https://github.com/shankar7055/Unfold/commit/b8b66b47d23d71b07b532fe043a216f836665bd7))
+* **docs:** revert appearance default to system ([51fa7ca](https://github.com/shankar7055/Unfold/commit/51fa7ca81c1795fb8f585dd6d95d341a5814326c))
+* **docs:** revert to mint theme, quill has issues ([20e7c04](https://github.com/shankar7055/Unfold/commit/20e7c049878ef6df25c0501ab250e7e633f4fbda))
+* **nav:** point Docs link directly to quickstart ([b2a1134](https://github.com/shankar7055/Unfold/commit/b2a1134aeaccdf93b57e1d728260bff716cc170a))
+* **nav:** revert docs link to root — quickstart was wrong ([f8765ee](https://github.com/shankar7055/Unfold/commit/f8765ee64ccd6b6a19c1c15d9b215a5c66b58f74))
+* **nav:** revert nav label — Benchmarks is clearer ([f840bcc](https://github.com/shankar7055/Unfold/commit/f840bccdeb66222e134a9b45ac7fa9af50209fad))
+
 ## [0.5.0](https://github.com/unfold-dev/unfold/compare/v0.4.1...v0.5.0) (2026-07-29)
 
 
