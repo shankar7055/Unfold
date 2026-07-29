@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:url",
-        content: "https://unfold.shankarpratap220.workers.dev/",
+        content: "https://unfold.unfold-app.workers.dev/",
       },
       ...buildSocialImageMeta(),
       { name: "twitter:card", content: "summary_large_image" },
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/")({
     links: [
       {
         rel: "canonical",
-        href: "https://unfold.shankarpratap220.workers.dev/",
+        href: "https://unfold.unfold-app.workers.dev/",
       },
     ],
     scripts: [
@@ -162,32 +162,32 @@ const homeStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@id": "https://unfold.shankarpratap220.workers.dev/#organization",
+      "@id": "https://unfold.unfold-app.workers.dev/#organization",
       "@type": "Organization",
       name: "Unfold",
       legalName: "Unfold Inc.",
-      url: "https://unfold.shankarpratap220.workers.dev/",
+      url: "https://unfold.unfold-app.workers.dev/",
       logo: {
         "@type": "ImageObject",
-        contentUrl: "https://unfold.shankarpratap220.workers.dev/icon-512.png",
+        contentUrl: "https://unfold.unfold-app.workers.dev/icon-512.png",
         width: 512,
         height: 512,
       },
       sameAs: ["https://github.com/shankar7055/Unfold.git"],
     },
     {
-      "@id": "https://unfold.shankarpratap220.workers.dev/#website",
+      "@id": "https://unfold.unfold-app.workers.dev/#website",
       "@type": "WebSite",
       name: "Unfold",
-      url: "https://unfold.shankarpratap220.workers.dev/",
+      url: "https://unfold.unfold-app.workers.dev/",
       description:
         "Hosted parsers and commercial engines behind one durable API. Compare engines for accuracy, cost, latency, and reliability.",
       publisher: {
-        "@id": "https://unfold.shankarpratap220.workers.dev/#organization",
+        "@id": "https://unfold.unfold-app.workers.dev/#organization",
       },
     },
     {
-      "@id": "https://unfold.shankarpratap220.workers.dev/#sdk",
+      "@id": "https://unfold.unfold-app.workers.dev/#sdk",
       "@type": "SoftwareSourceCode",
       name: "@unfold/sdk",
       description:
@@ -196,7 +196,7 @@ const homeStructuredData = {
       license: "https://opensource.org/license/mit",
       programmingLanguage: "TypeScript",
       runtimePlatform: "Node.js 22.14 or newer",
-      url: "https://unfold.shankarpratap220.workers.dev/",
+      url: "https://unfold.unfold-app.workers.dev/",
     },
   ],
 } as const

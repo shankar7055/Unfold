@@ -37,5 +37,5 @@ const result = await client.parse(file, {
 })
 ```
 
-See [unfold.dev](https://unfold.shankarpratap220.workers.dev) and the
+See [unfold.dev](https://unfold.unfold-app.workers.dev) and the
 [source repository](https://github.com/unfold-dev/unfold).

@@ -8,7 +8,7 @@ description: "Store a document and run explicit provider executions."
 Every create request requires an `Idempotency-Key` between 8 and 255 characters.
 
 ```bash
-curl https://unfold.shankarpratap220.workers.dev/api/v1/documents \
+curl https://unfold.unfold-app.workers.dev/api/v1/documents \
   --request POST \
   --header "Authorization: Bearer $FILEROUTER_API_KEY" \
   --header "Content-Type: application/json" \
@@ -20,7 +20,7 @@ For an upload, send `application/octet-stream` with the original filename and
 content type:
 
 ```bash
-curl https://unfold.shankarpratap220.workers.dev/api/v1/documents \
+curl https://unfold.unfold-app.workers.dev/api/v1/documents \
   --request POST \
   --header "Authorization: Bearer $FILEROUTER_API_KEY" \
   --header "Content-Type: application/octet-stream" \
@@ -38,7 +38,7 @@ no longer need the artifacts. Every job for the document must be terminal;
 release returns `409 document_active` while any job is queued or running.
 
 ```bash
-curl https://unfold.shankarpratap220.workers.dev/api/v1/documents/DOCUMENT_ID/release \
+curl https://unfold.unfold-app.workers.dev/api/v1/documents/DOCUMENT_ID/release \
   --request POST \
   --header "Authorization: Bearer $FILEROUTER_API_KEY"
 ```
@@ -49,7 +49,7 @@ Each provider entry is an independent execution. Provider-specific options stay
 on that entry instead of leaking into the rest of the job.
 
 ```bash
-curl https://unfold.shankarpratap220.workers.dev/api/v1/jobs \
+curl https://unfold.unfold-app.workers.dev/api/v1/jobs \
   --request POST \
   --header "Authorization: Bearer $FILEROUTER_API_KEY" \
   --header "Content-Type: application/json" \
@@ -86,7 +86,7 @@ changing the request with that header returns a conflict.
 ## Poll and retrieve results
 
 ```bash
-curl https://unfold.shankarpratap220.workers.dev/api/v1/jobs/550e8400-e29b-41d4-a716-446655440000 \
+curl https://unfold.unfold-app.workers.dev/api/v1/jobs/550e8400-e29b-41d4-a716-446655440000 \
   --header "Authorization: Bearer $FILEROUTER_API_KEY"
 ```
 
@@ -96,7 +96,7 @@ result availability. Results stay separate so one slow or failed provider does
 not hide successful work.
 
 ```bash
-curl https://unfold.shankarpratap220.workers.dev/api/v1/executions/EXECUTION_ID/result \
+curl https://unfold.unfold-app.workers.dev/api/v1/executions/EXECUTION_ID/result \
   --header "Authorization: Bearer $FILEROUTER_API_KEY"
 ```
 

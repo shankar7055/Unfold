@@ -6,7 +6,7 @@ Unfold supports two explicit processing modes. Hosted mode sends documents throu
 
 ## Documentation
 
-- [Full product context](https://unfold.shankarpratap220.workers.dev/llms-full.txt): What Unfold is today, how it creates leverage, and its near-term direction.
+- [Full product context](https://unfold.unfold-app.workers.dev/llms-full.txt): What Unfold is today, how it creates leverage, and its near-term direction.
 - [Complete documentation index](https://unfold-0a6049eb.mintlify.app/llms.txt): Machine-readable links to every Unfold documentation page.
 - [Full documentation](https://unfold-0a6049eb.mintlify.app/llms-full.txt): The complete Unfold documentation in one text file.
 - [Quickstart](https://unfold-0a6049eb.mintlify.app/quickstart.md): Install the SDK and parse a first document.
@@ -15,12 +15,12 @@ Unfold supports two explicit processing modes. Hosted mode sends documents throu
 
 ## Product and source
 
-- [Unfold website](https://unfold.shankarpratap220.workers.dev/): Product overview, processing modes, and supported integrations.
+- [Unfold website](https://unfold.unfold-app.workers.dev/): Product overview, processing modes, and supported integrations.
 - [GitHub repository](https://github.com/unfold-dev/unfold): SDK, CLI, hosted service, and documentation source.
 - [Published SDK metadata](https://registry.npmjs.org/@unfold%2Fsdk): Package versions, metadata, and README from the npm registry.
 
 ## Policies
 
-- [Privacy policy](https://unfold.shankarpratap220.workers.dev/privacy): Data collection, document processing, providers, retention, and user rights.
-- [Terms of service](https://unfold.shankarpratap220.workers.dev/terms): Terms for the website, API, SDK, CLI, and hosted processing.
-- [Cookie policy](https://unfold.shankarpratap220.workers.dev/cookies): Authentication, preferences, and scheduling technologies.
+- [Privacy policy](https://unfold.unfold-app.workers.dev/privacy): Data collection, document processing, providers, retention, and user rights.
+- [Terms of service](https://unfold.unfold-app.workers.dev/terms): Terms for the website, API, SDK, CLI, and hosted processing.
+- [Cookie policy](https://unfold.unfold-app.workers.dev/cookies): Authentication, preferences, and scheduling technologies.

@@ -6,7 +6,7 @@ description: "Create durable document parsing jobs over HTTP."
 The hosted API is available at:
 
 ```text
-https://unfold.shankarpratap220.workers.dev/api/v1
+https://unfold.unfold-app.workers.dev/api/v1
 ```
 
 Authenticate with a Unfold API key:
@@ -28,7 +28,7 @@ Authorization: Bearer fr_...
 | `GET`    | `/api/v1/providers`                       | Discover hosted provider capabilities |
 | `GET`    | `/api/v1/health`                          | Check API and database availability   |
 
-The complete OpenAPI 3.1 contract is published at [unfold.dev/api/openapi.json](https://unfold.shankarpratap220.workers.dev/api/openapi.json).
+The complete OpenAPI 3.1 contract is published at [unfold.dev/api/openapi.json](https://unfold.unfold-app.workers.dev/api/openapi.json).
 
 ## Errors
 
@@ -36,7 +36,7 @@ API errors use `application/problem+json` and include a stable code, HTTP status
 
 ```json
 {
-  "type": "https://unfold.shankarpratap220.workers.dev/problems/invalid_request",
+  "type": "https://unfold.unfold-app.workers.dev/problems/invalid_request",
   "title": "Invalid request",
   "status": 400,
   "detail": "A description of the invalid field.",
@@ -46,4 +46,4 @@ API errors use `application/problem+json` and include a stable code, HTTP status
 }
 ```
 
-A `402 Payment Required` response with code `insufficient_credits` means the account is out of credits. Add credits from the [dashboard](https://unfold.shankarpratap220.workers.dev/dashboard) before retrying the request. See [How credits work](/concepts/processing-modes#how-credits-work) for pricing details.
+A `402 Payment Required` response with code `insufficient_credits` means the account is out of credits. Add credits from the [dashboard](https://unfold.unfold-app.workers.dev/dashboard) before retrying the request. See [How credits work](/concepts/processing-modes#how-credits-work) for pricing details.

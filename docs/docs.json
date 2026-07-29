@@ -6,7 +6,7 @@
   "logo": {
     "light": "/assets/unfold-logo.svg",
     "dark": "/assets/unfold-logo.svg",
-    "href": "https://unfold.shankarpratap220.workers.dev"
+    "href": "https://unfold.unfold-app.workers.dev"
   },
   "favicon": "/assets/favicon.svg",
   "appearance": {
@@ -31,7 +31,7 @@
       },
       {
         "label": "Dashboard",
-        "href": "https://unfold.shankarpratap220.workers.dev/dashboard"
+        "href": "https://unfold.unfold-app.workers.dev/dashboard"
       }
     ]
   },
