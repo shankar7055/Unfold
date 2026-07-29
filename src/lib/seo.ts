@@ -1,5 +1,5 @@
 export const seo = {
-  siteUrl: "https://unfold.dev",
+  siteUrl: "https://unfold.shankarpratap220.workers.dev",
   siteName: "Unfold",
   defaultTitle: "Unfold",
   defaultDescription:

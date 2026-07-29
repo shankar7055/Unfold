@@ -28,17 +28,17 @@ const footerColumns = [
     links: [
       {
         label: "Documentation",
-        href: "https://docs.unfold.dev",
+        href: "https://unfold-0a6049eb.mintlify.app",
       },
       {
         label: "Quickstart",
-        href: "https://docs.unfold.dev/quickstart",
+        href: "https://unfold-0a6049eb.mintlify.app/quickstart",
       },
       {
         label: "API Reference",
-        href: "https://docs.unfold.dev/api/overview",
+        href: "https://unfold-0a6049eb.mintlify.app/api/overview",
       },
-      { label: "CLI", href: "https://docs.unfold.dev/cli" },
+      { label: "CLI", href: "https://unfold-0a6049eb.mintlify.app/cli" },
       {
         label: "GitHub",
         href: GITHUB_URL,

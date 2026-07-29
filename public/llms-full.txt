@@ -97,10 +97,10 @@ No. Direct or BYOK requests go from the user's environment to the selected provi
 
 ## Canonical resources
 
-- Website: https://unfold.dev/
-- Documentation index: https://docs.unfold.dev/llms.txt
-- Complete documentation: https://docs.unfold.dev/llms-full.txt
+- Website: https://unfold.shankarpratap220.workers.dev/
+- Documentation index: https://unfold-0a6049eb.mintlify.app/llms.txt
+- Complete documentation: https://unfold-0a6049eb.mintlify.app/llms-full.txt
 - Source code: https://github.com/unfold-dev/unfold
 - SDK registry metadata: https://registry.npmjs.org/@unfold%2Fsdk
-- Privacy policy: https://unfold.dev/privacy
-- Terms of service: https://unfold.dev/terms
+- Privacy policy: https://unfold.shankarpratap220.workers.dev/privacy
+- Terms of service: https://unfold.shankarpratap220.workers.dev/terms

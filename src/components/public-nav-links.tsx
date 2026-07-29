@@ -1,7 +1,11 @@
 import { Link } from "@tanstack/react-router"
 
 const links = [
-  { href: "https://docs.unfold.dev", label: "Docs", external: true },
+  {
+    href: "https://unfold-0a6049eb.mintlify.app",
+    label: "Docs",
+    external: true,
+  },
   { href: "/#benchmarks", label: "Benchmarks", external: false },
   { href: "/#pricing", label: "Pricing", external: false },
   { href: "/blog", label: "Blog", isRouter: true },

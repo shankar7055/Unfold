@@ -12,7 +12,8 @@ export const UNFOLD_API_KEY_PREFIX = "uf_"
 export const UNFOLD_VERSION = "0.5.0" // x-release-please-version
 export const UNFOLD_CLI_CLIENT_ID = "unfold-cli"
 export const UNFOLD_CLI_SCOPE = "jobs:create jobs:read"
-export const UNFOLD_DEFAULT_API_URL = "https://unfold.dev"
+export const UNFOLD_DEFAULT_API_URL =
+  "https://unfold.shankarpratap220.workers.dev"
 export const MAX_HOSTED_JOB_REQUEST_BYTES = 64 * 1024
 export const MAX_HOSTED_METADATA_ENTRIES = 50
 export const MAX_HOSTED_JOB_EXECUTIONS = 25

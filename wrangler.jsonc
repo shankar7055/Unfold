@@ -7,12 +7,7 @@
   "vars": {
     "HOSTED_BILLING_ENABLED": "true",
   },
-  "routes": [
-    {
-      "pattern": "unfold.dev",
-      "custom_domain": true,
-    },
-  ],
+
   "observability": {
     "enabled": true,
     "logs": {
@@ -32,7 +27,7 @@
     {
       "binding": "DB",
       "database_name": "unfold-production",
-      "database_id": "a5bfa076-ebbf-40f7-9c1a-2a5cc9c31c48",
+      "database_id": "c1c938f5-171e-4dac-a3fa-c70fd3c72b26",
       "migrations_dir": "drizzle",
     },
   ],

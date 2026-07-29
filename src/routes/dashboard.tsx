@@ -96,12 +96,12 @@ function DashboardPage() {
             <nav aria-label="Resources" className="mt-2 grid gap-1">
               {[
                 {
-                  href: "https://docs.unfold.dev",
+                  href: "https://unfold-0a6049eb.mintlify.app",
                   icon: BookOpenText,
                   label: "Documentation",
                 },
                 {
-                  href: "https://docs.unfold.dev/api/overview",
+                  href: "https://unfold-0a6049eb.mintlify.app/api/overview",
                   icon: CloudArrowUp,
                   label: "API reference",
                 },

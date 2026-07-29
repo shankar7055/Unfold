@@ -118,7 +118,9 @@ export function PricingSection() {
                         {plan.cta}
                       </Link>
                     ) : (
-                      <a href="https://docs.unfold.dev">{plan.cta}</a>
+                      <a href="https://unfold-0a6049eb.mintlify.app">
+                        {plan.cta}
+                      </a>
                     )}
                   </Button>
                 )}

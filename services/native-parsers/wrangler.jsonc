@@ -22,7 +22,7 @@
     "binding": "WORKER_VERSION",
   },
   "vars": {
-    "SOURCE_ORIGIN": "https://unfold.dev",
+    "SOURCE_ORIGIN": "https://unfold.shankarpratap220.workers.dev",
   },
   "containers": [
     {

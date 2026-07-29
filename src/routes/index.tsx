@@ -30,7 +30,10 @@ export const Route = createFileRoute("/")({
         content:
           "Hosted parsers and commercial engines behind one durable API. Compare engines for accuracy, cost, latency, and reliability.",
       },
-      { property: "og:url", content: "https://unfold.dev/" },
+      {
+        property: "og:url",
+        content: "https://unfold.shankarpratap220.workers.dev/",
+      },
       ...buildSocialImageMeta(),
       { name: "twitter:card", content: "summary_large_image" },
       {
@@ -43,7 +46,12 @@ export const Route = createFileRoute("/")({
           "Hosted parsers and commercial engines behind one durable API. Compare engines for accuracy, cost, latency, and reliability.",
       },
     ],
-    links: [{ rel: "canonical", href: "https://unfold.dev/" }],
+    links: [
+      {
+        rel: "canonical",
+        href: "https://unfold.shankarpratap220.workers.dev/",
+      },
+    ],
     scripts: [
       {
         type: "application/ld+json",
@@ -139,7 +147,7 @@ function App() {
             </a>
             <a
               className="inline-flex h-12 items-center justify-center rounded-md border border-white/20 bg-transparent px-6 font-body text-base font-medium text-white transition-colors hover:bg-white/[0.04]"
-              href="https://docs.unfold.dev"
+              href="https://unfold-0a6049eb.mintlify.app"
             >
               Read the docs
             </a>
@@ -154,30 +162,32 @@ const homeStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@id": "https://unfold.dev/#organization",
+      "@id": "https://unfold.shankarpratap220.workers.dev/#organization",
       "@type": "Organization",
       name: "Unfold",
       legalName: "Unfold Inc.",
-      url: "https://unfold.dev/",
+      url: "https://unfold.shankarpratap220.workers.dev/",
       logo: {
         "@type": "ImageObject",
-        contentUrl: "https://unfold.dev/icon-512.png",
+        contentUrl: "https://unfold.shankarpratap220.workers.dev/icon-512.png",
         width: 512,
         height: 512,
       },
       sameAs: ["https://github.com/shankar7055/Unfold.git"],
     },
     {
-      "@id": "https://unfold.dev/#website",
+      "@id": "https://unfold.shankarpratap220.workers.dev/#website",
       "@type": "WebSite",
       name: "Unfold",
-      url: "https://unfold.dev/",
+      url: "https://unfold.shankarpratap220.workers.dev/",
       description:
         "Hosted parsers and commercial engines behind one durable API. Compare engines for accuracy, cost, latency, and reliability.",
-      publisher: { "@id": "https://unfold.dev/#organization" },
+      publisher: {
+        "@id": "https://unfold.shankarpratap220.workers.dev/#organization",
+      },
     },
     {
-      "@id": "https://unfold.dev/#sdk",
+      "@id": "https://unfold.shankarpratap220.workers.dev/#sdk",
       "@type": "SoftwareSourceCode",
       name: "@unfold/sdk",
       description:
@@ -186,7 +196,7 @@ const homeStructuredData = {
       license: "https://opensource.org/license/mit",
       programmingLanguage: "TypeScript",
       runtimePlatform: "Node.js 22.14 or newer",
-      url: "https://unfold.dev/",
+      url: "https://unfold.shankarpratap220.workers.dev/",
     },
   ],
 } as const

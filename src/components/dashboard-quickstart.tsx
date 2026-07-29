@@ -2,7 +2,7 @@ import { AgentMarks } from "@/components/agent-marks"
 import { ClipboardCopyButton } from "@/components/clipboard-copy-button"
 
 const integrationPrompt =
-  "Use https://docs.unfold.dev to understand Unfold. Inspect this project's document flow, ask clarifying questions, and propose the cleanest integration plan before changing code."
+  "Use https://unfold-0a6049eb.mintlify.app to understand Unfold. Inspect this project's document flow, ask clarifying questions, and propose the cleanest integration plan before changing code."
 
 function QuickstartItem({
   children,
