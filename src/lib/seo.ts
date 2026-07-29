@@ -3,7 +3,7 @@ export const seo = {
   siteName: "Unfold",
   defaultTitle: "Unfold",
   defaultDescription:
-    "Parse and compare documents across providers through one durable API.",
+    "Parse and compare documents across providers with one durable API.",
   defaultSocialImage: "/og-image.png",
   defaultSocialImageAlt: "Unfold — one API for document parsing",
 } as const
