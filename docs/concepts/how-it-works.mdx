@@ -1,0 +1,95 @@
+---
+title: "How Unfold works"
+description: "The stable contract between your application and document parsing providers."
+---
+
+Unfold separates your document pipeline from provider-specific behavior.
+
+<Steps>
+  <Step title="Store the document">
+    Pass a file path, public URL, `File`, `Blob`, buffer, typed array, or web
+    stream. Hosted Unfold stores it once as an immutable document.
+  </Step>
+  <Step title="Select providers and outputs">
+    Choose one provider with `parse`, or several with `compare`. Unfold
+    validates requested outputs before starting provider work.
+  </Step>
+  <Step title="Run provider executions">
+    A durable job creates one execution per selected provider. Each adapter owns
+    request translation, submission, and polling.
+  </Step>
+  <Step title="Normalize the result">
+    Read the same result envelope regardless of the provider: outputs, page
+    count, timing, usage, and warnings.
+  </Step>
+</Steps>
+
+## Convenience and primitives
+
+### `parse`
+
+Processes a document with one provider and returns a `ParseResult`.
+
+### `compare`
+
+Processes the same stored document across several providers concurrently. The returned `CompareResult` retains a status and duration for every provider, including failures and unsupported output combinations.
+
+For longer application workflows, use `documents.create`, `jobs.create`,
+`jobs.wait`, `jobs.waitForExecution`, and `executions.result` directly. Those IDs
+are the stable boundary; `parse` and `compare` are concise wrappers over the same
+resources.
+
+```ts
+const document = await router.documents.create(stream, {
+  fileName: "report.pdf",
+  mimeType: "application/pdf",
+})
+
+let jobId: string | undefined
+try {
+  const job = await router.jobs.create({
+    documentId: document.id,
+    providers: [
+      {
+        key: "initial",
+        provider: "liteparse",
+        outputs: ["markdown", "pages"],
+        pageFields: ["markdown"],
+        providerOptions: { ocr: "auto" },
+      },
+      {
+        key: "secondary",
+        provider: "llamaparse",
+        outputs: ["markdown", "tables"],
+        providerOptions: { tier: "agentic" },
+      },
+    ],
+  })
+  jobId = job.id
+
+  const executionRef = job.executions.find((item) => item.key === "initial")
+  if (!executionRef) throw new Error("Initial execution was not created.")
+  const execution = await router.jobs.waitForExecution(job, executionRef)
+  if (execution.status === "complete" && execution.resultAvailable) {
+    const result = await router.executions.result(execution.id)
+    console.log(result.outputs.markdown)
+  }
+} finally {
+  if (jobId) await router.jobs.wait(jobId)
+  await router.documents.release(document.id)
+}
+```
+
+For step-by-step recipes, see [Guides](/guides/overview).
+
+`waitForExecution` lets an application consume one execution as soon as it
+finishes without waiting for the others. Provider keys are caller-defined labels;
+Unfold does not assign roles or decide which result wins.
+
+## Built-in providers
+
+Hosted jobs can select `llamaparse`, `mistral-ocr`, `datalab`, `liteparse`, or
+`pdf-inspector`. LiteParse and PDF Inspector run in separate private parser
+pools so lightweight PDF inspection does not inherit the OCR and Office
+conversion footprint. Every provider advertises its supported outputs and
+page fields, along with its execution model, through its runtime adapter.

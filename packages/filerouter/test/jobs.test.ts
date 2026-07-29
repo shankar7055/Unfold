@@ -1,0 +1,299 @@
+import { describe, expect, test, vi } from "vite-plus/test"
+
+import { Unfold } from "../src/client"
+import {
+  MAX_HOSTED_JOB_REQUEST_BYTES,
+  MAX_HOSTED_JOB_EXECUTIONS,
+} from "../src/hosted"
+
+describe("hosted resources", () => {
+  test("creates recoverable jobs from stored documents", async () => {
+    const fetchMock = vi.fn<typeof fetch>().mockResolvedValue(
+      Response.json({
+        executions: [
+          {
+            id: "execution-1",
+            key: "primary",
+            provider: "llamaparse",
+          },
+        ],
+        id: "job-1",
+        status: "queued",
+      })
+    )
+    const client = createClient(fetchMock)
+
+    await expect(
+      client.jobs.create(
+        {
+          documentId: "document-1",
+          providers: [
+            {
+              key: "primary",
+              outputs: ["markdown"],
+              provider: "llamaparse",
+            },
+          ],
+        },
+        { idempotencyKey: "job-create-1" }
+      )
+    ).resolves.toEqual({
+      executions: [
+        { id: "execution-1", key: "primary", provider: "llamaparse" },
+      ],
+      id: "job-1",
+      status: "queued",
+    })
+    const headers = new Headers(fetchMock.mock.calls[0]?.[1]?.headers)
+    expect(headers.get("idempotency-key")).toBe("job-create-1")
+    await expect(
+      new Request("https://example.com", fetchMock.mock.calls[0]?.[1]).json()
+    ).resolves.toEqual({
+      documentId: "document-1",
+      providers: [
+        { key: "primary", outputs: ["markdown"], provider: "llamaparse" },
+      ],
+    })
+  })
+
+  test("waits for a terminal job and reports status transitions once", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(Response.json(job("queued")))
+      .mockResolvedValueOnce(Response.json(job("running")))
+      .mockResolvedValueOnce(Response.json(job("running")))
+      .mockResolvedValueOnce(Response.json(job("complete")))
+    const statuses: Array<string> = []
+
+    await expect(
+      createClient(fetchMock).jobs.wait("job-2", {
+        onStatus: (value: { status: string }) => statuses.push(value.status),
+      })
+    ).resolves.toMatchObject({ status: "complete" })
+    expect(statuses).toEqual(["queued", "running", "complete"])
+  })
+
+  test("waits for one execution without waiting for the whole job", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(
+        Response.json(
+          job("running", [
+            execution("liteparse", "queued"),
+            execution("llamaparse", "running"),
+          ])
+        )
+      )
+      .mockResolvedValueOnce(
+        Response.json(
+          job("running", [
+            execution("liteparse", "complete"),
+            execution("llamaparse", "running"),
+          ])
+        )
+      )
+    const statuses: Array<string> = []
+
+    await expect(
+      createClient(fetchMock).jobs.waitForExecution(
+        "job-2",
+        "execution-liteparse",
+        {
+          onStatus: (value: { status: string }) => statuses.push(value.status),
+        }
+      )
+    ).resolves.toMatchObject({ provider: "liteparse", status: "complete" })
+    expect(statuses).toEqual(["queued", "complete"])
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  test("retries transient reads", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(
+        Response.json({ detail: "try again" }, { status: 503 })
+      )
+      .mockResolvedValueOnce(Response.json(job("complete")))
+
+    await expect(
+      createClient(fetchMock).jobs.get("job-3")
+    ).resolves.toMatchObject({ status: "complete" })
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  test("surfaces payment failures without retrying", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(
+        Response.json(
+          { detail: "out of credits", request_id: "request-payment" },
+          { status: 402 }
+        )
+      )
+
+    await expect(
+      createClient(fetchMock).jobs.get("job-4")
+    ).rejects.toMatchObject({
+      code: "PaymentRequired",
+      requestId: "request-payment",
+      retryable: false,
+    })
+    expect(fetchMock).toHaveBeenCalledOnce()
+  })
+
+  test("accepts repeated providers with distinct execution keys", async () => {
+    const fetchMock = vi.fn<typeof fetch>().mockResolvedValue(
+      Response.json({
+        executions: [
+          {
+            id: "execution-1",
+            key: "accurate OCR",
+            provider: "llamaparse",
+          },
+          { id: "execution-2", key: "second", provider: "llamaparse" },
+        ],
+        id: "job-1",
+        status: "queued",
+      })
+    )
+
+    await createClient(fetchMock).jobs.create({
+      documentId: "document-1",
+      providers: [
+        { key: "accurate OCR", provider: "llamaparse" },
+        { key: "second", provider: "llamaparse" },
+      ],
+    })
+
+    expect(fetchMock).toHaveBeenCalledOnce()
+  })
+
+  test("rejects invalid or oversized jobs before sending them", async () => {
+    const fetchMock = vi.fn<typeof fetch>()
+    const jobs = createClient(fetchMock).jobs
+    const base = {
+      documentId: "document-1",
+    }
+
+    await expect(
+      jobs.create({
+        ...base,
+        providers: [
+          { key: "duplicate", provider: "llamaparse" },
+          { key: "duplicate", provider: "liteparse" },
+        ],
+      })
+    ).rejects.toMatchObject({ code: "InvalidInput" })
+    await expect(jobs.create({ ...base, providers: [] })).rejects.toMatchObject(
+      {
+        code: "InvalidInput",
+      }
+    )
+    await expect(
+      jobs.create({
+        ...base,
+        providers: [{ key: " ", provider: "llamaparse" }],
+      })
+    ).rejects.toMatchObject({ code: "InvalidInput" })
+    await expect(
+      jobs.create({
+        ...base,
+        providers: [
+          {
+            key: undefined as unknown as string,
+            provider: "llamaparse",
+          },
+        ],
+      })
+    ).rejects.toMatchObject({ code: "InvalidInput" })
+    await expect(
+      jobs.create({
+        ...base,
+        providers: [
+          {
+            key: "primary",
+            pageFields: ["markdown"],
+            provider: "llamaparse",
+          },
+        ],
+      })
+    ).rejects.toMatchObject({ code: "InvalidInput" })
+    await expect(
+      jobs.create({
+        ...base,
+        metadata: Object.fromEntries(
+          Array.from({ length: 51 }, (_, index) => [`key-${index}`, "value"])
+        ),
+        providers: [{ key: "primary", provider: "llamaparse" }],
+      })
+    ).rejects.toMatchObject({ code: "InvalidInput" })
+    await expect(
+      jobs.create({
+        ...base,
+        providers: [
+          {
+            key: "primary",
+            providerOptions: {
+              agentic_options: {
+                custom_prompt: "x".repeat(MAX_HOSTED_JOB_REQUEST_BYTES),
+              },
+            },
+            provider: "llamaparse",
+          },
+        ],
+      })
+    ).rejects.toMatchObject({ code: "InvalidInput" })
+    await expect(
+      jobs.create({
+        ...base,
+        providers: Array.from(
+          { length: MAX_HOSTED_JOB_EXECUTIONS + 1 },
+          (_, index) => ({
+            key: `target-${index}`,
+            provider: "liteparse" as const,
+          })
+        ),
+      })
+    ).rejects.toMatchObject({ code: "InvalidInput" })
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+})
+
+function createClient(fetchMock: typeof fetch): Unfold {
+  return new Unfold({
+    apiKey: "uf_test_key",
+    baseURL: "https://example.com",
+    fetch: fetchMock,
+    pollingIntervalMs: 0,
+  })
+}
+
+function job(
+  status: "complete" | "queued" | "running",
+  executions: Array<object> = []
+) {
+  return {
+    createdAt: "2026-07-18T00:00:00.000Z",
+    documentId: "document-1",
+    executions,
+    id: "job",
+    status,
+    updatedAt: "2026-07-18T00:00:00.000Z",
+  }
+}
+
+function execution(
+  provider: "liteparse" | "llamaparse",
+  status: "complete" | "queued" | "running"
+) {
+  return {
+    createdAt: "2026-07-18T00:00:00.000Z",
+    id: `execution-${provider}`,
+    jobId: "job",
+    key: provider,
+    outputs: ["markdown"],
+    provider,
+    resultAvailable: status === "complete",
+    status,
+  }
+}

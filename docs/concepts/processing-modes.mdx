@@ -1,0 +1,62 @@
+---
+title: "Hosted and direct processing"
+description: "Choose where Unfold runs and where your documents travel."
+---
+
+Unfold supports two explicit processing modes. Neither mode silently falls back to the other.
+
+|                        | Hosted                       | Direct / BYOK        |
+| ---------------------- | ---------------------------- | -------------------- |
+| TypeScript entry point | `Unfold`                     | `DirectUnfold`       |
+| Authentication         | Unfold API key               | Provider API keys    |
+| Document route         | Your app → Unfold → provider | Your app → provider  |
+| Job orchestration      | Managed by Unfold            | Runs in your process |
+| Billing                | Unfold credits               | Provider billing     |
+| CLI                    | Default after `login`        | Add `--local`        |
+
+## Hosted
+
+Hosted processing is the shortest path to production. Unfold stores the document, creates a durable job, runs each selected provider independently, and retains each normalized result for retrieval.
+
+Credits pay for Unfold-hosted processing. Each account receives **5,000 free credits each month**, and purchased credits never expire. Direct or BYOK requests do not use Unfold credits.
+
+## How credits work
+
+**1,000 credits equal $1 of Unfold-hosted usage.** Credit usage is based on the selected parser's upstream price and the infrastructure needed to run the job, with a 10% Unfold beta margin included. Native parser usage depends on active processing time and allocated compute.
+
+A comparison uses credits for each provider that successfully returns a parsed result. Providers that fail before returning a result do not consume credits. Direct or BYOK requests are billed by the provider and never use Unfold credits.
+
+Free credits reset each month. Purchased credits never expire and remain available after the monthly allowance resets.
+
+Hosted document sources are limited to **100 MB**, whether uploaded or fetched
+from a public URL. Stored documents and completed results expire after **7
+days**, and job records are retained for **30 days**. Delete a document sooner
+with `router.documents.delete(documentId)` or the hosted document deletion
+endpoint. Storage during these retention windows does not consume credits.
+
+Public URL inputs are fetched once into Unfold storage before any provider
+runs. This gives retries and comparisons one immutable source and avoids sending
+a user-controlled URL to private native parsers.
+
+## Direct / BYOK
+
+Direct processing uses provider adapters from `@file_router/sdk` inside your runtime. Your document and provider credential do not pass through Unfold, but the selected provider still receives the document.
+
+```ts
+import { DirectUnfold } from "@file_router/sdk"
+import { llamaparse } from "@file_router/sdk/llamaparse"
+
+const router = new DirectUnfold({
+  providers: { llamaparse: llamaparse() },
+})
+
+const result = await router.parse("./report.pdf", {
+  provider: "llamaparse",
+  outputs: ["markdown"],
+})
+```
+
+<Warning>
+  Direct means the request bypasses Unfold infrastructure. It does not mean the
+  document stays on the machine.
+</Warning>

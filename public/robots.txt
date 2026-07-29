@@ -1,0 +1,8 @@
+# Public product and legal pages are available to search and AI crawlers.
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /device
+
+Sitemap: https://filerouter.dev/sitemap.xml

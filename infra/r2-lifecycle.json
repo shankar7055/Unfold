@@ -1,0 +1,41 @@
+{
+  "rules": [
+    {
+      "id": "expire-document-sources",
+      "enabled": true,
+      "conditions": {
+        "prefix": "documents/"
+      },
+      "deleteObjectsTransition": {
+        "condition": {
+          "type": "Age",
+          "maxAge": 1209600
+        }
+      }
+    },
+    {
+      "id": "expire-execution-results",
+      "enabled": true,
+      "conditions": {
+        "prefix": "executions/"
+      },
+      "deleteObjectsTransition": {
+        "condition": {
+          "type": "Age",
+          "maxAge": 1209600
+        }
+      }
+    },
+    {
+      "id": "abort-incomplete-multipart-uploads",
+      "enabled": true,
+      "conditions": {},
+      "abortMultipartUploadsTransition": {
+        "condition": {
+          "type": "Age",
+          "maxAge": 604800
+        }
+      }
+    }
+  ]
+}

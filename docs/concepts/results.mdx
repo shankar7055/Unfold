@@ -1,0 +1,83 @@
+---
+title: "Results"
+description: "The normalized result shapes returned by Unfold."
+---
+
+## Parse results
+
+Every successful parse returns a `ParseResult`:
+
+```ts
+interface ParseResult {
+  id: string
+  provider: string
+  outputs: Partial<{
+    chunks: unknown
+    html: string
+    images: ParsedImage[]
+    json: unknown
+    markdown: string
+    metadata: Record<string, unknown>
+    pages: ParsePage[]
+    tables: ParsedTable[]
+    text: string
+  }>
+  pageCount: number
+  quality?: {
+    score: number
+    scale?: number
+  }
+  raw?: unknown
+  timing: {
+    startedAt: string
+    completedAt: string
+    durationMs: number
+  }
+  usage?: {
+    costUsd?: number
+    credits?: number
+    pages?: number
+  }
+  warnings: ParseWarning[]
+}
+```
+
+Only requested and supported values appear under `outputs`.
+`pageCount` is the number of pages processed in this result; when a provider
+exposes the source document's total separately, it appears in `metadata`.
+
+## Page fields
+
+Request `pages` when you need page boundaries. Use `pageFields` to keep only
+the portable fields your application consumes:
+
+```ts
+const result = await router.parse(file, {
+  provider: "liteparse",
+  outputs: ["pages"],
+  pageFields: ["markdown"],
+  providerOptions: {
+    liteparse: { ocr: "off", imageMode: "off" },
+  },
+})
+```
+
+Every returned page retains `pageNumber` and `warnings`. Other requested fields
+appear when the provider supplies them.
+
+## Page numbering
+
+Pages in Unfold results are one-based. Provider adapters translate page selections to the provider's native representation.
+
+## Raw provider responses
+
+Set `includeRaw: true` to include the complete provider response under `raw` when the adapter supports it.
+
+<Warning>
+  Raw responses are provider-specific and can substantially increase result
+  size. Do not build portable application logic against them.
+</Warning>
+
+## Quality and usage
+
+`quality` and `usage` are optional because providers expose different metadata. A quality score is provider-native; check its scale before comparing it with another provider's score.

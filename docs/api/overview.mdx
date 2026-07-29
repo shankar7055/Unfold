@@ -1,0 +1,49 @@
+---
+title: "Hosted API"
+description: "Create durable document parsing jobs over HTTP."
+---
+
+The hosted API is available at:
+
+```text
+https://unfold.dev/api/v1
+```
+
+Authenticate with a Unfold API key:
+
+```http
+Authorization: Bearer fr_...
+```
+
+## Endpoints
+
+| Method   | Path                                      | Purpose                               |
+| -------- | ----------------------------------------- | ------------------------------------- |
+| `POST`   | `/api/v1/documents`                       | Store a file or public URL            |
+| `GET`    | `/api/v1/documents/{documentId}`          | Read document metadata                |
+| `DELETE` | `/api/v1/documents/{documentId}`          | Delete a document and its job data    |
+| `POST`   | `/api/v1/jobs`                            | Run providers against a document      |
+| `GET`    | `/api/v1/jobs/{jobId}`                    | Read job and execution status         |
+| `GET`    | `/api/v1/executions/{executionId}/result` | Retrieve one provider result          |
+| `GET`    | `/api/v1/providers`                       | Discover hosted provider capabilities |
+| `GET`    | `/api/v1/health`                          | Check API and database availability   |
+
+The complete OpenAPI 3.1 contract is published at [unfold.dev/api/openapi.json](https://unfold.dev/api/openapi.json).
+
+## Errors
+
+API errors use `application/problem+json` and include a stable code, HTTP status, request ID, and human-readable detail:
+
+```json
+{
+  "type": "https://unfold.dev/problems/invalid_request",
+  "title": "Invalid request",
+  "status": 400,
+  "detail": "A description of the invalid field.",
+  "instance": "/api/v1/jobs",
+  "code": "invalid_request",
+  "request_id": "..."
+}
+```
+
+A `402 Payment Required` response with code `insufficient_credits` means the account is out of credits. Add credits from the [dashboard](https://unfold.dev/dashboard) before retrying the request. See [How credits work](/concepts/processing-modes#how-credits-work) for pricing details.

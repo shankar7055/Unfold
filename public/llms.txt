@@ -1,0 +1,26 @@
+# Unfold
+
+> Unfold is a TypeScript SDK, CLI, and hosted API for parsing and comparing documents across providers through one normalized contract.
+
+Unfold supports two explicit processing modes. Hosted mode sends documents through Unfold infrastructure to the selected provider. Direct or BYOK mode calls the selected provider from the user's environment, so Unfold does not receive the document, key, or result. A comparison sends the document to every selected provider.
+
+## Documentation
+
+- [Full product context](https://unfold.dev/llms-full.txt): What Unfold is today, how it creates leverage, and its near-term direction.
+- [Complete documentation index](https://docs.unfold.dev/llms.txt): Machine-readable links to every Unfold documentation page.
+- [Full documentation](https://docs.unfold.dev/llms-full.txt): The complete Unfold documentation in one text file.
+- [Quickstart](https://docs.unfold.dev/quickstart.md): Install the SDK and parse a first document.
+- [Hosted and direct processing](https://docs.unfold.dev/concepts/processing-modes.md): Choose between Unfold-hosted execution and direct calls with your own provider credentials.
+- [API reference](https://docs.unfold.dev/api/overview.md): Use the hosted HTTP API.
+
+## Product and source
+
+- [Unfold website](https://unfold.dev/): Product overview, processing modes, and supported integrations.
+- [GitHub repository](https://github.com/unfold-dev/unfold): SDK, CLI, hosted service, and documentation source.
+- [Published SDK metadata](https://registry.npmjs.org/@unfold%2Fsdk): Package versions, metadata, and README from the npm registry.
+
+## Policies
+
+- [Privacy policy](https://unfold.dev/privacy): Data collection, document processing, providers, retention, and user rights.
+- [Terms of service](https://unfold.dev/terms): Terms for the website, API, SDK, CLI, and hosted processing.
+- [Cookie policy](https://unfold.dev/cookies): Authentication, preferences, and scheduling technologies.

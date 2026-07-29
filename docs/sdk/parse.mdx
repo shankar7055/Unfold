@@ -1,0 +1,73 @@
+---
+title: "Parse"
+description: "Parse a document with one provider using the TypeScript SDK."
+---
+
+Use `Unfold` for hosted jobs or `DirectUnfold` for direct provider calls. Both expose the same `parse(input, options)` shape.
+
+```ts
+const result = await client.parse("./invoice.pdf", {
+  provider: "mistral-ocr",
+  outputs: ["markdown", "pages", "tables"],
+  pageFields: ["markdown", "tables"],
+  pages: [1, 2, 3],
+  timeoutMs: 120_000,
+})
+```
+
+## Inputs
+
+The SDK accepts:
+
+- A file path or public HTTP(S) URL as a string
+- `URL`, `File`, or `Blob`
+- `ArrayBuffer` or an array-buffer view
+- `ReadableStream<Uint8Array>`
+- Explicit file, URL, byte, or named stream input objects
+
+Use a named stream when uploading from object storage so Unfold receives the
+original filename and content type without buffering the stream:
+
+```ts
+const result = await client.parse({
+  data: object.body,
+  kind: "stream",
+  mimeType: object.httpMetadata?.contentType,
+  name: "report.pdf",
+})
+```
+
+## Options
+
+| Option            | Type               | Purpose                                              |
+| ----------------- | ------------------ | ---------------------------------------------------- |
+| `provider`        | `string`           | Provider ID to use                                   |
+| `outputs`         | `ParseOutput[]`    | Requested normalized outputs; defaults to `markdown` |
+| `pageFields`      | `ParsePageField[]` | Fields retained on each requested page               |
+| `pages`           | `number[]`         | One-based page selection                             |
+| `providerOptions` | `object`           | Namespaced provider-native settings                  |
+| `includeRaw`      | `boolean`          | Include the provider response                        |
+| `timeoutMs`       | `number`           | Abort the operation after this duration              |
+| `signal`          | `AbortSignal`      | Cancel from your application                         |
+
+`pageFields` requires `outputs: ["pages"]` (or another output list containing
+`pages`). Unfold always retains each page's `pageNumber` and `warnings`.
+
+Hosted calls also accept `idempotencyKey`. When omitted, the client generates a UUID for the request.
+
+Hosted results expose the resource IDs created by the convenience call:
+
+```ts
+await client.documents.delete(result.resources.documentId)
+```
+
+Deleting the document also removes its retained job and execution results.
+
+Failed hosted requests throw `UnfoldError`. Its `requestId` identifies the
+server request when you need support or are correlating application logs.
+
+<Note>
+  Unfold rejects outputs and page fields the selected provider does not
+  advertise before starting the provider request. Use `client.providers.list()`
+  to discover the hosted capabilities at runtime.
+</Note>

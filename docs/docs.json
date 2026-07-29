@@ -1,0 +1,82 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Unfold",
+  "description": "Durable document parsing across providers.",
+  "theme": "mint",
+  "logo": {
+    "light": "/assets/unfold-logo.svg",
+    "dark": "/assets/unfold-logo.svg",
+    "href": "https://unfold.dev"
+  },
+  "favicon": "/assets/favicon.svg",
+  "appearance": {
+    "default": "system"
+  },
+  "fonts": {
+    "family": "Geist"
+  },
+  "colors": {
+    "primary": "#F59E0B",
+    "light": "#FBBF24",
+    "dark": "#D97706"
+  },
+  "icons": {
+    "library": "lucide"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/shankar7055/Unfold.git"
+      },
+      {
+        "label": "Dashboard",
+        "href": "https://unfold.dev/dashboard"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/unfold-dev/unfold",
+      "discord": "https://discord.gg/dtPnzkqCcG"
+    }
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get started",
+        "pages": ["index", "quickstart"]
+      },
+      {
+        "group": "Guides",
+        "pages": [
+          "guides/overview",
+          "guides/fast-then-strong",
+          "guides/cheap-path",
+          "guides/bake-off",
+          "guides/durable-jobs"
+        ]
+      },
+      {
+        "group": "Concepts",
+        "pages": [
+          "concepts/how-it-works",
+          "concepts/processing-modes",
+          "concepts/results"
+        ]
+      },
+      {
+        "group": "TypeScript SDK",
+        "pages": ["sdk/parse", "sdk/compare", "sdk/provider-options"]
+      },
+      {
+        "group": "Command line",
+        "pages": ["cli/overview"]
+      },
+      {
+        "group": "API reference",
+        "pages": ["api/overview", "api/jobs"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+---
+title: "Provider options"
+description: "Pass provider-native settings without leaking them across adapters."
+---
+
+Use `providerOptions` when Unfold's common options do not expose a provider-specific feature.
+
+```ts
+const result = await client.parse("./report.pdf", {
+  provider: "llamaparse",
+  outputs: ["markdown"],
+  providerOptions: {
+    llamaparse: {
+      tier: "agentic",
+    },
+  },
+})
+```
+
+Each provider reads only its own namespace:
+
+- `providerOptions.llamaparse`
+- `providerOptions["mistral-ocr"]`
+- `providerOptions.datalab`
+- `providerOptions.liteparse`
+- `providerOptions["pdf-inspector"]`
+
+This keeps native settings available without flattening incompatible provider APIs into one shared object. Hosted provider options are typed by provider, so unsupported fields fail TypeScript checks before a request is sent. Direct mode remains open to custom provider IDs and their own option shapes.
+
+<Note>
+  Provider-native fields can change upstream. Unfold protects transport-owned
+  fields, but you should confirm option names against the provider's
+  documentation and your installed SDK version.
+</Note>
+
+Hosted requests encode provider options as JSON. The encoded options are limited to **64 KiB**.
+
+Hosted LiteParse supports curated options for managed OCR, Office conversion,
+image handling, complexity analysis, and screenshots. Transport credentials,
+custom OCR server URLs, passwords, and filesystem paths are rejected. Unfold
+never silently disables a requested capability; unsupported options fail the
+job explicitly.
