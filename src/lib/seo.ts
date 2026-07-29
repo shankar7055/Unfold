@@ -5,7 +5,7 @@ export const seo = {
   defaultDescription:
     "Parse and compare documents across providers through one durable API.",
   defaultSocialImage: "/og-image.png",
-  defaultSocialImageAlt: "Unfold — parse, compare, route documents across providers",
+  defaultSocialImageAlt: "Unfold — one API for document parsing",
 } as const
 
 type PublicMetaOptions = {
